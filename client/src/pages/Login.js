@@ -11,28 +11,20 @@ const Login = ({ onLogin }) => {
     try {
       const res = await axios.post('https://pay-backend-dfok.onrender.com/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
+      alert('Login successful');
       onLogin();
       navigate('/dashboard');
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || 'Login failed');
+    } catch (error) {
+      console.error(error);
+      alert(error.response?.data?.message || 'Login failed');
     }
   };
 
   return (
     <form onSubmit={handleLogin} style={{ margin: '2rem' }}>
       <h2>Login</h2>
-      <input
-        placeholder="Email"
-        onChange={e => setForm({ ...form, email: e.target.value })}
-        required
-      /><br />
-      <input
-        placeholder="Password"
-        type="password"
-        onChange={e => setForm({ ...form, password: e.target.value })}
-        required
-      /><br />
+      <input placeholder="Email" type="email" onChange={e => setForm({ ...form, email: e.target.value })} required /><br />
+      <input placeholder="Password" type="password" onChange={e => setForm({ ...form, password: e.target.value })} required /><br />
       <button type="submit">Login</button>
     </form>
   );
